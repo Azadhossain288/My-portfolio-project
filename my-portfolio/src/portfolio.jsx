@@ -74,7 +74,8 @@ const PROJECTS = [
   category: "Mobile Financial Services",
   year: "2024",
   tags: ["TailwindCSS", "JavaScript", "Logic"],
-  desc: "A Fintech application facilitating essential transactions like Add Money, Cash Out, and Bill Payments. Features real-time history and a reward system for a secure digital wallet experience.",
+  liveUrl: "https://azadhossain288.github.io/ShohojPay-project/", 
+  desc: "A Fintech application...",
   color: "#c8a97e",
   bg: "linear-gradient(135deg, #1a0812 0%, #020d12 100%)",
   icon: (
@@ -90,9 +91,11 @@ const PROJECTS = [
     category: "Productivity App",
     year: "2024",
     tags: ["JavaScript", "CSS Grid", "LocalStorage"],
+    liveUrl: "https://azadhossain288.github.io/ShohojPay-project/",
     desc: "Minimal yet powerful Kanban board with drag-and-drop, priority tags, and seamless local persistence for modern teams.",
     color: "#e8c47a",
     bg: "linear-gradient(135deg, #041a12 0%, #020e0a 100%)",
+
     icon: "🗂️",
   },
   {
@@ -101,6 +104,7 @@ const PROJECTS = [
     category: "Data Dashboard",
     year: "2023",
     tags: ["React", "REST API", "GSAP"],
+    liveUrl: "https://azadhossain288.github.io/ShohojPay-project/",
     desc: "Cinematic weather dashboard with OpenWeather API integration, animated transitions and real-time atmospheric data.",
     color: "#d4b896",
     bg: "linear-gradient(135deg, #031a10 0%, #021020 100%)",
@@ -112,6 +116,7 @@ const PROJECTS = [
     category: "Content Platform",
     year: "2023",
     tags: ["Next.js", "MDX", "Vercel"],
+    liveUrl: "https://azadhossain288.github.io/ShohojPay-project/",
     desc: "Markdown-powered personal blog with syntax highlighting, dark/light toggle, and RSS feed for developer storytelling.",
     color: "#c9a870",
     bg: "linear-gradient(135deg, #050f28 0%, #020d0a 100%)",
@@ -443,12 +448,14 @@ function SkillRow({ name, level, index }) {
   );
 }
 
+
+
 function ProjectRow({ project, index }) {
   const [ref, visible] = useInView(0.05);
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div ref={ref} className="relative border-b border-[#0a2a1a] overflow-hidden cursor-pointer"
+    <div ref={ref} className="relative border-b border-green-600 overflow-hidden cursor-pointer"
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)", transition: `all 0.6s ease ${index * 100}ms` }}>
 
@@ -460,9 +467,10 @@ function ProjectRow({ project, index }) {
 
       {/* Content */}
       <div className="relative z-10 px-6 md:px-10 py-7 md:py-8 grid grid-cols-12 gap-4 items-center">
+        
         {/* Number */}
-        <div className="col-span-1 font-mono text-xs text-[#0a3020] transition-colors duration-300"
-          style={{ color: hovered ? `${project.color}80` : "#0a3020" }}>{project.num}</div>
+        <div className="col-span-1 font-mono text-xs transition-colors duration-300"
+          style={{ color: hovered ? `${project.color}80` : "green" }}>{project.num}</div>
 
         {/* Icon — appears on hover */}
         <div className="col-span-1 text-2xl transition-all duration-500"
@@ -471,41 +479,91 @@ function ProjectRow({ project, index }) {
         </div>
 
         {/* Title */}
-        <div className="col-span-5 md:col-span-4">
+        <div className="col-span-10 md:col-span-4">
           <div className="text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300"
             style={{ fontFamily: "'Cormorant Garamond', serif", color: hovered ? project.color : "white" }}>
             {project.title}
           </div>
-          <div className="text-[#0a3020] text-xs font-mono tracking-widest uppercase mt-0.5 transition-colors duration-300"
-            style={{ color: hovered ? `${project.color}60` : "#0a3020" }}>
+          <div className="text-xs font-mono tracking-widest uppercase mt-0.5 transition-colors duration-300"
+            style={{ color: hovered ? `${project.color}60` : "white" }}>
             {project.category}
           </div>
+
+          {/* Mobile only — Live Demo button */}
+          {project.liveUrl && (
+            
+              <a href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="md:hidden mt-3 inline-flex items-center gap-2 text-[10px] tracking-[.2em] uppercase font-mono px-3 py-1.5 border transition-all duration-300"
+              style={{
+                borderColor: project.color + "60",
+                color: project.color,
+                background: project.color + "15",
+              }}
+            >
+              Live Demo ↗
+            </a>
+          )}
         </div>
 
-        {/* Description — slides in on hover */}
-        <div className="col-span-7 md:col-span-4 hidden md:block">
-          <p className="text-sm leading-relaxed font-light transition-all duration-500"
+        {/* Description + Live Button — desktop */}
+        <div className="col-span-12 md:col-span-4 hidden md:block">
+          <p className="text-sm leading-relaxed font-light transition-all duration-500 mb-4"
             style={{ color: hovered ? "#4a8a6a" : "transparent", transform: hovered ? "translateX(0)" : "translateX(10px)" }}>
             {project.desc}
           </p>
+          {project.liveUrl && (
+            
+              <a href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="inline-flex items-center gap-2 text-[10px] tracking-[.25em] uppercase font-mono px-4 py-2 border transition-all duration-500"
+              style={{
+                opacity: hovered ? 1 : 0,
+                transform: hovered ? "translateY(0)" : "translateY(6px)",
+                borderColor: project.color + "50",
+                color: project.color,
+                background: project.color + "10",
+                pointerEvents: hovered ? "auto" : "none",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = project.color + "28";
+                e.currentTarget.style.borderColor = project.color;
+                e.currentTarget.style.boxShadow = `0 0 20px ${project.color}30`;
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = project.color + "10";
+                e.currentTarget.style.borderColor = project.color + "50";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <span>Live Demo</span>
+              <span style={{ fontSize: "14px" }}>↗</span>
+            </a>
+          )}
         </div>
 
         {/* Tags + Year */}
-        <div className="col-span-5 md:col-span-2 flex flex-col items-end gap-2">
-          <div className="text-[#071e18] font-mono text-xs">{project.year}</div>
+        <div className="col-span-10 md:col-span-2 flex flex-col items-end gap-2">
+          <div className="font-mono text-xs transition-colors duration-300"
+            style={{ color: hovered ? `${project.color}60` : "white" }}>{project.year}</div>
           <div className="flex flex-wrap gap-1 justify-end">
             {project.tags.slice(0, 2).map(t => (
               <span key={t} className="text-[9px] font-mono tracking-wider px-1.5 py-0.5 border rounded transition-all duration-300"
                 style={{
-                  borderColor: hovered ? `${project.color}30` : "#0a2a1a",
-                  color: hovered ? project.color : "#0a3020"
+                  borderColor: hovered ? `${project.color}40` : "white",
+                  color: hovered ? project.color : "white",
+                  background: hovered ? project.color + "0a" : "transparent",
                 }}>{t}</span>
             ))}
           </div>
         </div>
 
         {/* Arrow */}
-        <div className="col-span-1 flex justify-end">
+        <div className="col-span-2 md:col-span-1 flex justify-end">
           <div className="text-lg transition-all duration-500"
             style={{
               color: project.color,
@@ -517,6 +575,12 @@ function ProjectRow({ project, index }) {
     </div>
   );
 }
+
+
+
+
+
+
 
 export default function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
@@ -766,7 +830,7 @@ export default function Portfolio() {
               style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               Start a <span className="gold-shimmer">Conversation</span>
             </h2>
-            <p className="text-[#0a3020] text-sm font-light">Have a project in mind? I'd love to bring your vision to life.</p>
+            <p className="text-green-500 text-sm font-light">Have a project in mind? I'd love to bring your vision to life.</p>
           </div>
 
           <div className="grid md:grid-cols-5 gap-16">
@@ -776,7 +840,7 @@ export default function Portfolio() {
                 { label: "Location", value: "Sylhet, Bangladesh" },
                 { label: "Availability", value: "Open to work" },
               ].map(({ label, value }) => (
-                <div key={label} className="border-b border-[#0a2a1a] pb-6">
+                <div key={label} className="border-b border-[#0cb360] pb-6">
                   <div className="text-[#061210] text-[9px] tracking-[.4em] uppercase font-mono mb-2">{label}</div>
                   <div className="text-[#c8a97e] text-sm font-light">{value}</div>
                 </div>
@@ -792,7 +856,7 @@ export default function Portfolio() {
                       style={{ background: color + "18", color }}>
                       {icon}
                     </div>
-                    <span className="text-[11px] tracking-[.2em] uppercase font-mono text-[#4a9a7a] group-hover:text-white transition-colors duration-300 flex-1">{name}</span>
+                    <span className="text-[11px] tracking-[.2em] uppercase font-mono text-[#0cb360] group-hover:text-white transition-colors duration-300 flex-1">{name}</span>
                     <span className="text-[#0a2a1a] group-hover:text-[#c8a97e] transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">↗</span>
                   </a>
                 ))}
@@ -804,15 +868,15 @@ export default function Portfolio() {
                 { label: "Full Name", key: "name", type: "text", placeholder: "Your Name" },
                 { label: "Email Address", key: "email", type: "email", placeholder: "your@email.com" },
               ].map(({ label, key, type, placeholder }) => (
-                <div key={key} className="border-b border-[#0a2a1a] pb-1 focus-within:border-[#c8a97e]/25 transition-colors duration-300">
-                  <label className="text-[#061210] text-[9px] tracking-[.4em] uppercase font-mono block mb-3">{label}</label>
+                <div key={key} className="border-b border-[#0cb360] pb-1 focus-within:border-[#c8a97e]/25 transition-colors duration-300">
+                  <label className="text-green-500 text-[9px] tracking-[.4em] uppercase font-mono block mb-3">{label}</label>
                   <input type={type} required placeholder={placeholder} value={formData[key]}
                     onChange={e => setFormData(f => ({ ...f, [key]: e.target.value }))}
                     className="w-full text-sm pb-2 font-light" />
                 </div>
               ))}
-              <div className="border-b border-[#0a2a1a] pb-1 focus-within:border-[#c8a97e]/25 transition-colors duration-300">
-                <label className="text-[#061210] text-[9px] tracking-[.4em] uppercase font-mono block mb-3">Message</label>
+              <div className="border-b border-[#0cb360] pb-1 focus-within:border-[#c8a97e]/25 transition-colors duration-300">
+                <label className="text-green-500 text-[9px] tracking-[.4em] uppercase font-mono block mb-3">Message</label>
                 <textarea required rows={4} placeholder="Tell me about your project..." value={formData.message}
                   onChange={e => setFormData(f => ({ ...f, message: e.target.value }))}
                   className="w-full text-sm font-light resize-none pb-2" />
@@ -833,7 +897,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-[#0a2a1a] py-10">
+      <footer className="border-t border-green-300 py-10">
         <div className="max-w-6xl mx-auto px-8 flex flex-wrap justify-between items-center gap-6">
           <div className="text-xl font-bold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
             <span className="gold-shimmer">Azad Hossain</span>
@@ -845,12 +909,12 @@ export default function Portfolio() {
                 className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#0a2a1a] transition-all duration-300"
                 onMouseEnter={e => { e.currentTarget.style.borderColor = color + "55"; e.currentTarget.style.background = color + "12"; e.currentTarget.style.color = color; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = ""; e.currentTarget.style.background = ""; e.currentTarget.style.color = ""; }}
-                style={{ color: "#0a3020" }}>
+                style={{ color: "green-400" }}>
                 {icon}
               </a>
             ))}
           </div>
-          <div className="text-[#061512] text-[9px] tracking-[.35em] uppercase font-mono">© 2025 — All Rights Reserved</div>
+          <div className="text-green-400 text-[9px] tracking-[.35em] uppercase font-mono">© 2026 — All Rights Reserved</div>
         </div>
       </footer>
     </div>
