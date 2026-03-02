@@ -59,6 +59,8 @@ const SOCIAL_LINKS = [
 
 
 const SKILLS = [
+
+  { name:"Data Structure & Algorithm",level:80},
   { name: "HTML5", level: 95 },
   { name: "CSS3 / Tailwind", level: 90 },
   { name: "JavaScript", level: 88 },
@@ -100,24 +102,24 @@ const PROJECTS = [
   },
   {
     num: "03",
-    title: "WeatherVerse",
-    category: "Data Dashboard",
-    year: "2023",
-    tags: ["React", "REST API", "GSAP"],
-    liveUrl: "https://azadhossain288.github.io/ShohojPay-project/",
-    desc: "Cinematic weather dashboard with OpenWeather API integration, animated transitions and real-time atmospheric data.",
+    title: "TechWave - Responsive Podcast Landing Page (Grid & Flexbox)",
+    category: "Manage Your Podcast Experience Smarter",
+    year: "2026",
+    tags: ["CSS", "Grid & Flex", "GSAP"],
+    liveUrl: "https://azadhossain288.github.io/ASSIGNMENT2_OF_PH/",
+    desc: "A modern dark-themed podcast landing page built using CSS Grid and Flexbox for a clean, structured, and responsive layout. It showcases featured episodes, host details, and key statistics with a visually engaging UI design.",
     color: "#d4b896",
     bg: "linear-gradient(135deg, #031a10 0%, #021020 100%)",
     icon: "🌦️",
   },
   {
     num: "04",
-    title: "DevBlog",
-    category: "Content Platform",
-    year: "2023",
-    tags: ["Next.js", "MDX", "Vercel"],
-    liveUrl: "https://azadhossain288.github.io/ShohojPay-project/",
-    desc: "Markdown-powered personal blog with syntax highlighting, dark/light toggle, and RSS feed for developer storytelling.",
+    title: "The Tea House Landing Page!",
+    category: "The Smart Way to Enjoy Your Perfect Cup of Tea",
+    year: "2026",
+    tags: ["HTML5", "tailwindCSS", "Vercel"],
+    liveUrl: "https://azadhossain288.github.io/Tea-house-project/",
+    desc: " This landing page is a masterclass in Conversion-Focused Design.It doesn't just sell a product,it manages a lifestyle through a Smarter user journey  ",
     color: "#c9a870",
     bg: "linear-gradient(135deg, #050f28 0%, #020d0a 100%)",
     icon: "✍️",
@@ -362,6 +364,7 @@ const SKILL_META = {
   "React.js":        { icon: "⚛️", color: "#7ee8e8" },
   "TypeScript":      { icon: "🔷", color: "#7e9de8" },
   "UI / Figma":      { icon: "✏️", color: "#c87ee8" },
+  "Data Structure & Algorithm": { icon: "🧠", color: "#4CAF50" },
 };
 
 function SkillRow({ name, level, index }) {
