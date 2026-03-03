@@ -1,24 +1,30 @@
-export const SKILLS = [
-  { name: "Data Structure & Algorithm", level: 80 },
-  { name: "HTML5",                      level: 95 },
-  { name: "CSS3 / Tailwind",            level: 90 },
-  { name: "JavaScript",                 level: 88 },
-  { name: "React.js",                   level: 85 },
-  { name: "TypeScript",                 level: 75 },
-  { name: "UI / Figma",                 level: 70 },
-];
-
-export const SKILL_META = {
-  "HTML5":                        { icon: "🌐", color: "#e8a87e" },
-  "CSS3 / Tailwind":              { icon: "🎨", color: "#7eb8e8" },
-  "JavaScript":                   { icon: "⚡", color: "#e8d87e" },
-  "React.js":                     { icon: "⚛️", color: "#7ee8e8" },
-  "TypeScript":                   { icon: "🔷", color: "#7e9de8" },
-  "UI / Figma":                   { icon: "✏️", color: "#c87ee8" },
-  "Data Structure & Algorithm":   { icon: "🧠", color: "#4CAF50" },
-};
-
-export const EXTRA_TOOLS = [
-  "Git & GitHub", "Figma", "Vite", "Webpack",
-  "Vercel", "Firebase", "REST APIs", "Responsive Design",
+export const SKILL_CATEGORIES = [
+  {
+    category: "Frontend Development",
+    skills: [
+      { name: "HTML5",       level: 95, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS3",        level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { name: "Tailwind CSS",level: 90, icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
+      { name: "JavaScript",  level: 88, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "React.js",    level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "TypeScript",  level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+    ],
+  },
+  {
+    category: "Tools & Others",
+    skills: [
+      { name: "Git & GitHub", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+      { name: "Figma",        level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+      { name: "Vite",         level: 80, icon: "https://vitejs.dev/logo.svg" },
+      { name: "VS Code",      level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+    ],
+  },
+  {
+    category: "Problem Solving",
+    skills: [
+      { name: "Data Structures", level: 80, icon: "🧠" },
+      { name: "Algorithms",      level: 75, icon: "⚡" },
+      { name: "C++",             level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+    ],
+  },
 ];

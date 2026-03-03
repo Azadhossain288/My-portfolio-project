@@ -1,93 +1,95 @@
 import { useState } from "react";
-import { SKILLS, SKILL_META, EXTRA_TOOLS } from "../data/skills";
+import { SKILL_CATEGORIES } from "../data/skills";
 import useInView from "../hooks/useInView";
 
-function SkillRow({ name, level, index }) {
-  const [ref, visible] = useInView();
+function SkillCard({ skill, index }) {
+  const [ref, visible] = useInView(0.05);
   const [hovered, setHovered] = useState(false);
-  const meta = SKILL_META[name] || { icon: "💡", color: "#c8a97e" };
+
+  const isUrl = typeof skill.icon === "string" && skill.icon.startsWith("http");
 
   return (
     <div ref={ref}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative border-b border-[#0a2a1a] overflow-hidden cursor-pointer"
+      className="relative rounded-xl p-4 flex flex-col gap-3 transition-all duration-300"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "none" : "translateY(20px)",
-        transition: `opacity 0.6s ease ${index * 70}ms, transform 0.6s ease ${index * 70}ms`,
+        transition: `all 0.5s ease ${index * 60}ms`,
+        background: hovered ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${hovered ? "rgba(139,92,246,0.4)" : "rgba(255,255,255,0.07)"}`,
+        boxShadow: hovered ? "0 8px 30px rgba(139,92,246,0.15)" : "none",
       }}>
 
-      {/* Hover glow */}
-      <div className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-        style={{ background: `linear-gradient(90deg, ${meta.color}08, transparent 60%)`, opacity: hovered ? 1 : 0 }} />
-      <div className="absolute left-0 top-0 bottom-0 w-0.5 transition-all duration-500"
-        style={{ background: `linear-gradient(to bottom, transparent, ${meta.color}, transparent)`, opacity: hovered ? 1 : 0 }} />
-
-      <div className="relative z-10 py-5 px-4 flex items-center gap-5">
-        <span className="font-mono text-xs w-6 transition-colors duration-300"
-          style={{ color: hovered ? meta.color : "rgba(200,169,126,.3)" }}>
-          {String(index + 1).padStart(2, "0")}
+      {/* Top row — icon + name + percent */}
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
+          style={{ background: "rgba(255,255,255,0.05)" }}>
+          {isUrl ? (
+            <img src={skill.icon} alt={skill.name} className="w-6 h-6 object-contain" />
+          ) : (
+            <span className="text-lg">{skill.icon}</span>
+          )}
+        </div>
+        <span className="flex-1 text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+          {skill.name}
         </span>
+        <span className="text-xs font-mono font-semibold" style={{ color: "#8b5cf6" }}>
+          {skill.level}%
+        </span>
+      </div>
 
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center text-base transition-all duration-400 flex-shrink-0"
+      {/* Progress bar */}
+      <div className="w-full h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+        <div className="h-full rounded-full transition-all duration-1000 ease-out"
           style={{
-            background: hovered ? `${meta.color}15` : "transparent",
-            border: `1px solid ${hovered ? meta.color + "40" : "transparent"}`,
-            transform: hovered ? "scale(1) rotate(0deg)" : "scale(0.7) rotate(-10deg)",
-            opacity: hovered ? 1 : 0,
-          }}>
-          {meta.icon}
-        </div>
-
-        <span className="flex-1 text-lg tracking-wide transition-colors duration-300"
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: hovered ? meta.color : "white" }}>
-          {name}
-        </span>
-
-        <div className="flex items-center gap-4">
-          <div className="relative w-28 md:w-52 h-1 rounded-full overflow-hidden transition-all duration-300"
-            style={{ background: hovered ? `${meta.color}18` : "#0a2a1a" }}>
-            <div className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
-              style={{
-                width: visible ? `${level}%` : "0%",
-                background: hovered ? `linear-gradient(90deg, ${meta.color}88, ${meta.color})` : "linear-gradient(90deg, #c8a97e55, #c8a97e)",
-                boxShadow: hovered ? `0 0 10px ${meta.color}80` : "0 0 4px rgba(200,169,126,.3)",
-                transitionDelay: `${index * 70 + 300}ms`,
-              }} />
-          </div>
-          <span className="font-mono text-xs w-8 text-right transition-all duration-300"
-            style={{ color: hovered ? meta.color : "rgba(200,169,126,.4)" }}>
-            {level}%
-          </span>
-        </div>
+            width: visible ? `${skill.level}%` : "0%",
+            background: "linear-gradient(90deg, #6d28d9, #8b5cf6, #a78bfa)",
+            boxShadow: hovered ? "0 0 8px rgba(139,92,246,0.6)" : "none",
+            transitionDelay: `${index * 60 + 200}ms`,
+          }} />
       </div>
     </div>
   );
 }
 
 function SkillsSection() {
+  const [ref, visible] = useInView(0.05);
+
   return (
     <section id="skills" className="py-28 border-t border-[#0a2a1a]">
-      <div className="max-w-4xl mx-auto px-8">
-        <div className="grid md:grid-cols-3 gap-6 mb-16 items-end">
-          <div>
-            <div className="text-[#c8a97e]/60 text-[10px] tracking-[.45em] uppercase font-mono mb-3">Expertise</div>
-            <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Skills</h2>
-          </div>
-          <p className="md:col-span-2 text-[#4a9a7a] text-sm leading-relaxed font-light">
-            A curated set of technologies mastered through years of building real-world products — from pixel-perfect UIs to scalable React applications.
-          </p>
+      <div className="max-w-6xl mx-auto px-8">
+
+        {/* Header */}
+        <div ref={ref} className="text-center mb-16"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)", transition: "all 0.7s ease" }}>
+          <h2 className="text-4xl md:text-6xl font-bold italic mb-3"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: "white" }}>
+            Technical Expertise
+          </h2>
+          <div className="mx-auto w-16 h-0.5 rounded-full" style={{ background: "linear-gradient(90deg, #6d28d9, #8b5cf6)" }} />
         </div>
 
-        {SKILLS.map((s, i) => <SkillRow key={s.name} {...s} index={i} />)}
+        {/* Categories */}
+        <div className="flex flex-col gap-12">
+          {SKILL_CATEGORIES.map((cat, ci) => (
+            <div key={cat.category}>
+              {/* Category label */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1 h-6 rounded-full" style={{ background: "linear-gradient(to bottom, #6d28d9, #8b5cf6)" }} />
+                <span className="text-base font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  {cat.category}
+                </span>
+              </div>
 
-        <div className="flex flex-wrap gap-2.5 mt-12">
-          {EXTRA_TOOLS.map((t) => (
-            <span key={t}
-              className="text-green-400 tracking-[.25em] uppercase font-mono px-3 py-2 border border-[#0a2a1a] text-[#071e18] hover:border-[#c8a97e]/25 hover:text-[#c8a97e]/50 transition-all duration-200 cursor-default">
-              {t}
-            </span>
+              {/* Skills grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {cat.skills.map((skill, si) => (
+                  <SkillCard key={skill.name} skill={skill} index={ci * 10 + si} />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>

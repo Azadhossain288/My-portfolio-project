@@ -1,0 +1,26 @@
+export const EDUCATION = [
+  {
+    id: "01",
+    degree: "B.Sc. in Computer Science & Engineering",
+    institution: "Metropolitan University, Sylhet",
+    location: "Sylhet, Bangladesh",
+    statusLabel: "2023 — PRESENT (4TH YEAR / 1ST SEMESTER)",
+    status: "ongoing",
+    desc: "Focusing on Software Engineering, Data Structures, and Web Technologies. Currently working on final year research/project.",
+    subjects: ["Data Structures", "Algorithms", "DBMS", "Artificial Intelligence"],
+    icon: "🎓",
+    color: "#4ade80",
+  },
+  {
+    id: "02",
+    degree: "Complete Web Development (Level-1)",
+    institution: "Programming Hero",
+    location: "Online",
+    statusLabel: "RUNNING (50% COMPLETED)",
+    status: "completed",
+    desc: "Mastered modern frontend development with HTML5, CSS3, JavaScript, React, and Tailwind. Built multiple real-world projects with clean UI and performance focus.",
+    subjects: ["HTML5", "CSS3", "JavaScript", "React", "Tailwind"],
+    icon: "</>",
+    color: "#c8a97e",
+  },
+];

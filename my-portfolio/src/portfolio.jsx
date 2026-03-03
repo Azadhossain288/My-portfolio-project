@@ -6,6 +6,8 @@ import SkillsSection   from "./components/SkillsSection";
 import ProjectsSection from "./components/ProjectsSection";
 import ContactSection  from "./components/ContactSection";
 import Footer          from "./components/Footer";
+import CertificatesSection from "./components/CertificatesSection";
+import EducationSection from "./components/EducationSection";
 
 export default function Portfolio() {
   const [scrolled,     setScrolled]     = useState(false);
@@ -29,7 +31,9 @@ export default function Portfolio() {
       style={{ fontFamily: "'DM Sans', sans-serif", background: "#020d12", color: "white", minHeight: "100vh" }}
       className="antialiased"
     >
-      {/* ── Global styles & animations ── */}
+
+      
+      {/* Global styles & animations */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
         ::-webkit-scrollbar{width:3px}
@@ -82,7 +86,9 @@ export default function Portfolio() {
         scrollTo={scrollTo}
       />
       <HeroSection    heroVisible={heroVisible} scrollTo={scrollTo} />
+      <EducationSection />
       <SkillsSection  />
+      <CertificatesSection />
       <ProjectsSection />
       <ContactSection />
       <Footer />
