@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PROJECTS } from "../data/projects";
 import useInView from "../hooks/useInView";
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index, onSelectProject }) {
   const [ref, visible] = useInView(0.05);
   const [hovered, setHovered] = useState(false);
 
@@ -22,46 +22,19 @@ function ProjectCard({ project, index }) {
 
       {/* Preview area */}
       <div className="relative overflow-hidden" style={{ height: 220 }}>
-
-        {/* Category badge */}
         <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase font-semibold"
           style={{ background: project.color + "22", color: project.color, border: `1px solid ${project.color}40`, backdropFilter: "blur(8px)" }}>
           {project.category}
         </div>
 
-        {/* IMAGE or ICON */}
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700"
-            style={{ transform: hovered ? "scale(1.05)" : "scale(1)" }}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center relative" style={{ background: project.bg }}>
-            <span className="absolute text-[120px] font-bold select-none pointer-events-none"
-              style={{ color: project.color + "08", fontFamily: "'Cormorant Garamond', serif", lineHeight: 1 }}>
-              {project.num}
-            </span>
-            <div className="relative z-10 w-20 h-20 rounded-2xl flex items-center justify-center text-4xl"
-              style={{
-                background: project.color + "15",
-                border: `1px solid ${project.color}30`,
-                transform: hovered ? "scale(1.1) rotate(5deg)" : "scale(1) rotate(0deg)",
-                transition: "transform 0.5s ease",
-                color: project.color,
-              }}>
-              {project.icon}
-            </div>
-          </div>
-        )}
-
-        {/* Bottom fade */}
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-700"
+          style={{ transform: hovered ? "scale(1.05)" : "scale(1)" }}
+        />
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "linear-gradient(to bottom, transparent 40%, #0a1628 100%)" }} />
-        {/* Hover shine */}
-        <div className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-          style={{ background: `radial-gradient(ellipse at 50% 0%, ${project.color}12, transparent 70%)`, opacity: hovered ? 1 : 0 }} />
       </div>
 
       {/* Card body */}
@@ -70,76 +43,94 @@ function ProjectCard({ project, index }) {
           style={{ fontFamily: "'Cormorant Garamond', serif", color: hovered ? project.color : "white" }}>
           {project.title}
         </h3>
-        <p className="text-sm leading-relaxed font-light flex-1" style={{ color: "rgba(255,255,255,0.45)" }}>
-          {project.desc.length > 100 ? project.desc.slice(0, 100) + "..." : project.desc}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map(tag => (
-            <span key={tag} className="text-[10px] font-mono tracking-[.2em] uppercase px-3 py-1.5 rounded-lg transition-all duration-300"
-              style={{
-                background: hovered ? project.color + "15" : "rgba(255,255,255,0.05)",
-                color: hovered ? project.color : "rgba(255,255,255,0.5)",
-                border: `1px solid ${hovered ? project.color + "30" : "rgba(255,255,255,0.08)"}`,
-              }}>
-              {tag}
-            </span>
-          ))}
-        </div>
-        {project.liveUrl && (
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-            onClick={e => e.stopPropagation()}
-            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-[11px] tracking-[.25em] uppercase font-mono font-semibold mt-1"
-            style={{
-              background: hovered ? `linear-gradient(135deg, ${project.color}, ${project.color}cc)` : "rgba(255,255,255,0.05)",
-              color: hovered ? "#000" : "rgba(255,255,255,0.5)",
-              border: `1px solid ${hovered ? "transparent" : "rgba(255,255,255,0.08)"}`,
-              boxShadow: hovered ? `0 8px 30px ${project.color}40` : "none",
-              transition: "all 0.3s ease",
-            }}>
-            Live Preview
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        )}
+        
+        {/* View More / Details Button */}
+        <button
+          onClick={() => onSelectProject(project)}
+          className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-[11px] tracking-[.25em] uppercase font-mono font-semibold mt-auto cursor-pointer"
+          style={{
+            background: hovered ? `linear-gradient(135deg, ${project.color}, ${project.color}cc)` : "rgba(255,255,255,0.05)",
+            color: hovered ? "#000" : "rgba(255,255,255,0.7)",
+            border: `1px solid ${hovered ? "transparent" : "rgba(255,255,255,0.08)"}`,
+            transition: "all 0.3s ease",
+          }}>
+          View More / Details
+        </button>
       </div>
     </div>
   );
 }
 
-function ProjectsSection() {
+export default function ProjectsSection({ onSelectProject }) {
   const [ref, visible] = useInView(0.05);
+  const [selectedTag, setSelectedTag] = useState("All");
+  const [showAll, setShowAll] = useState(false);
+
+  const allTags = ["All", ...new Set(PROJECTS.flatMap(p => p.tags))];
+
+  const filteredProjects = selectedTag === "All" 
+    ? PROJECTS 
+    : PROJECTS.filter(p => p.tags.includes(selectedTag));
+
+  const displayedProjects = (selectedTag === "All" && !showAll) 
+    ? filteredProjects.slice(0, 3) 
+    : filteredProjects;
+
   return (
     <section id="projects" className="py-28 border-t border-[#0a2a1a]">
       <div className="max-w-6xl mx-auto px-8">
-        <div ref={ref} className="mb-16"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)", transition: "all 0.7s ease" }}>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#c8a97e]/50" />
-              <div className="text-[#c8a97e]/60 text-[10px] tracking-[.45em] uppercase font-mono">Portfolio</div>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#c8a97e]/50" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Featured <span className="gold-shimmer">Work</span>
-            </h2>
-            <p className="text-[#4a9a7a] text-sm font-light max-w-xl mx-auto">
-              From concept to code, here are some of my favorite projects that showcase my frontend skills.
-            </p>
-            <div className="text-[#c8a97e]/30 text-xs font-mono tracking-widest uppercase mt-3">
-              0{PROJECTS.length} Projects
-            </div>
-          </div>
+        <div ref={ref} className="mb-12 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            Featured <span className="gold-shimmer">Work</span>
+          </h2>
+          <p className="text-[#4a9a7a] text-sm font-light max-w-xl mx-auto">
+            Explore my projects by filtering technologies or viewing details.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map((p, i) => (
-            <ProjectCard key={p.title} project={p} index={i} />
+        {/* ফিল্টার বাটন */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => { setSelectedTag(tag); setShowAll(false); }}
+              className="px-4 py-2 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-300 cursor-pointer"
+              style={{
+                background: selectedTag === tag ? "#c8a97e" : "rgba(255,255,255,0.05)",
+                color: selectedTag === tag ? "#000" : "rgba(255,255,255,0.6)",
+                border: `1px solid ${selectedTag === tag ? "#c8a97e" : "rgba(255,255,255,0.1)"}`,
+              }}
+            >
+              {tag}
+            </button>
           ))}
         </div>
+
+        {/* প্রজেক্ট গ্রিড */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayedProjects.map((p, i) => (
+            <ProjectCard key={p.title} project={p} index={i} onSelectProject={onSelectProject} />
+          ))}
+        </div>
+
+        {/* See More বাটন */}
+        {selectedTag === "All" && PROJECTS.length > 3 && (
+          <div className="text-center mt-12">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-8 py-4 rounded-xl text-xs font-mono tracking-[.25em] uppercase font-semibold transition-all duration-300 cursor-pointer"
+              style={{
+                background: "rgba(200, 169, 126, 0.1)",
+                color: "#c8a97e",
+                border: "1px solid rgba(200, 169, 126, 0.3)",
+              }}
+            >
+              {showAll ? "Show Less" : "See More Projects"}
+            </button>
+          </div>
+        )}
+
       </div>
     </section>
   );
 }
-
-export default ProjectsSection;

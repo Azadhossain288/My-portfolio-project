@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
+import { PROJECTS } from "./data/projects";
 
-import Navbar          from "./components/Navbar";
-import HeroSection     from "./components/HeroSection";
-import SkillsSection   from "./components/SkillsSection";
-import ProjectsSection from "./components/ProjectsSection";
-import ContactSection  from "./components/ContactSection";
-import Footer          from "./components/Footer";
+import Navbar              from "./components/Navbar";
+import HeroSection         from "./components/HeroSection";
+import SkillsSection       from "./components/SkillsSection";
+import ProjectsSection     from "./components/ProjectsSection";
+import ContactSection      from "./components/ContactSection";
+import Footer              from "./components/Footer";
 import CertificatesSection from "./components/CertificatesSection";
-import EducationSection from "./components/EducationSection";
+import EducationSection    from "./components/EducationSection";
 
 export default function Portfolio() {
   const [scrolled,     setScrolled]     = useState(false);
   const [menuOpen,     setMenuOpen]     = useState(false);
   const [heroVisible,  setHeroVisible]  = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null); // আলাদা পেজের জন্য স্টেট
 
   useEffect(() => {
     setTimeout(() => setHeroVisible(true), 150);
@@ -22,7 +24,10 @@ export default function Portfolio() {
   }, []);
 
   const scrollTo = (id) => {
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    setSelectedProject(null); // হোম পেজে ফিরে এসে স্ক্রোল করবে
+    setTimeout(() => {
+      document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
     setMenuOpen(false);
   };
 
@@ -31,27 +36,11 @@ export default function Portfolio() {
       style={{ fontFamily: "'DM Sans', sans-serif", background: "#020d12", color: "white", minHeight: "100vh" }}
       className="antialiased"
     >
-
-      
-      {/* Global styles & animations */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
         ::-webkit-scrollbar{width:3px}
         ::-webkit-scrollbar-track{background:#020d12}
         ::-webkit-scrollbar-thumb{background:linear-gradient(#c8a97e,#a0784e);border-radius:99px}
-
-        @keyframes spin1{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-        @keyframes spin2{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
-        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-        @keyframes floatBadge1{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        @keyframes floatBadge2{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.4)}50%{opacity:.8;box-shadow:0 0 0 4px rgba(74,222,128,0)}}
-        @keyframes shimmer{0%{background-position:-300% center}100%{background-position:300% center}}
-        @keyframes grain{
-          0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,-2%)}
-          40%{transform:translate(2%,1%)}60%{transform:translate(-1%,3%)}80%{transform:translate(3%,-1%)}
-        }
-
         .gold-shimmer{
           background:linear-gradient(90deg,#a0784e,#c8a97e,#e8d5b0,#f0e0b8,#c8a97e,#a0784e);
           background-size:300%;
@@ -60,24 +49,7 @@ export default function Portfolio() {
           background-clip:text;
           animation:shimmer 6s linear infinite;
         }
-        .gold-line{background:linear-gradient(90deg,transparent,rgba(200,169,126,.3),transparent)}
-
-        .grain-overlay::before{
-          content:'';position:fixed;inset:-100%;width:300%;height:300%;
-          opacity:.025;pointer-events:none;z-index:9999;
-          animation:grain 7s steps(1) infinite;
-          background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-        }
-
-        input,textarea{outline:none;color:white;background:transparent!important}
-        input::placeholder,textarea::placeholder{color:#071e18}
-        input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{
-          -webkit-box-shadow:0 0 0 1000px #020d12 inset!important;
-          -webkit-text-fill-color:white!important;
-        }
       `}</style>
-
-      <div className="grain-overlay" />
 
       <Navbar
         scrolled={scrolled}
@@ -85,12 +57,84 @@ export default function Portfolio() {
         setMenuOpen={setMenuOpen}
         scrollTo={scrollTo}
       />
-      <HeroSection    heroVisible={heroVisible} scrollTo={scrollTo} />
-      <EducationSection />
-      <SkillsSection  />
-      <CertificatesSection />
-      <ProjectsSection />
-      <ContactSection />
+
+      {/* যদি কোনো প্রজেক্ট সিলেক্ট করা থাকে, তবে আলাদা ডিটেইলস পেজ দেখাবে, নতুবা হোম পেজ দেখাবে */}
+      {selectedProject ? (
+        <div className="py-32 px-6 max-w-4xl mx-auto">
+          <button 
+            onClick={() => setSelectedProject(null)}
+            className="mb-8 text-xs font-mono uppercase tracking-widest text-[#c8a97e] hover:underline cursor-pointer">
+            ← Back to Home / Projects
+          </button>
+
+          <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", color: selectedProject.color || "#c8a97e" }}>
+            {selectedProject.title}
+          </h1>
+          <p className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-6">{selectedProject.category}</p>
+
+          <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-[400px] object-cover rounded-2xl mb-8 border border-white/10 shadow-2xl" />
+
+          {/* Main Technology Stack */}
+          <div className="mb-8">
+            <h3 className="text-sm font-mono uppercase tracking-wider text-[#c8a97e] mb-3">Main Technology Stack Used:</h3>
+            <div className="flex flex-wrap gap-2">
+              {(selectedProject.techStack || selectedProject.tags || []).map(tech => (
+                <span key={tech} className="text-xs font-mono px-4 py-2 rounded-lg bg-white/5 text-gray-300 border border-white/10">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Brief Description */}
+          <div className="mb-8">
+            <h3 className="text-sm font-mono uppercase tracking-wider text-[#c8a97e] mb-2">Brief Description:</h3>
+            <p className="text-base text-gray-300 font-light leading-relaxed">{selectedProject.desc || selectedProject.description}</p>
+          </div>
+
+          {/* Challenges Faced While Developing */}
+          <div className="mb-8">
+            <h3 className="text-sm font-mono uppercase tracking-wider text-[#c8a97e] mb-2">Challenges Faced While Developing:</h3>
+            <p className="text-base text-gray-300 font-light leading-relaxed">
+              {selectedProject.challenges || "Implementing secure session management, role-based access control, and ensuring synchronization between server-side filtering/pagination and smooth state updates presented minor architectural hurdles which were successfully resolved."}
+            </p>
+          </div>
+
+          {/* Potential Improvements & Future Plans */}
+          <div className="mb-10">
+            <h3 className="text-sm font-mono uppercase tracking-wider text-[#c8a97e] mb-2">Potential Improvements & Future Plans:</h3>
+            <p className="text-base text-gray-300 font-light leading-relaxed">
+              {selectedProject.futurePlans || "Planning to introduce real-time interaction features, extended analytics dashboards, and enhanced responsive accessibility enhancements for broader user engagement."}
+            </p>
+          </div>
+
+          {/* Live project link & GitHub repository link (only client) */}
+          <div className="flex flex-wrap gap-4">
+            {(selectedProject.liveUrl || selectedProject.live) && (
+              <a href={selectedProject.liveUrl || selectedProject.live} target="_blank" rel="noopener noreferrer"
+                className="px-8 py-4 rounded-xl text-xs font-mono uppercase tracking-widest font-semibold bg-[#c8a97e] text-black hover:opacity-90 transition">
+                Live Project Link
+              </a>
+            )}
+            {(selectedProject.githubUrl || selectedProject.github) && (
+              <a href={selectedProject.githubUrl || selectedProject.github} target="_blank" rel="noopener noreferrer"
+                className="px-8 py-4 rounded-xl text-xs font-mono uppercase tracking-widest font-semibold bg-white/10 text-white hover:bg-white/20 transition border border-white/10">
+                GitHub Repository (Client)
+              </a>
+            )}
+          </div>
+        </div>
+      ) : (
+        <>
+          <HeroSection heroVisible={heroVisible} scrollTo={scrollTo} />
+          <EducationSection />
+          <SkillsSection />
+          <CertificatesSection />
+          <ProjectsSection onSelectProject={setSelectedProject} />
+          <ContactSection />
+        </>
+      )}
+
       <Footer />
     </div>
   );
