@@ -6,7 +6,7 @@ import ironPulseImg  from "../assets/ironpulse.png";
 import ghorKhojImg   from "../assets/ghorkhoj.png";
 import travelImg     from "../assets/travel.png";
 import driveFleetImg from "../assets/drivefleet.png";
-import sunCartImg    from "../assets/sun.png";
+import sunCartImg    from "../assets/Sun.png";
 import circleCoreImg from "../assets/circlecore.png";
 
 export const PROJECTS = [
