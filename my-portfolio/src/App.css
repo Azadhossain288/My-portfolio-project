@@ -1,8 +1,13 @@
+body {
+  background: linear-gradient(160deg, #0a1f1a 0%, #0f2922 50%, #0a1f1a 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .logo {

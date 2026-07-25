@@ -72,7 +72,7 @@ function Avatar3D() {
                 display: "block",
               }}
             />
-            <div className="text-[#c8a97e]/60 text-xs tracking-[.25em] uppercase font-mono">Frontend Dev</div>
+            <div className="text-[#c8a97e]/60 text-xs tracking-[.25em] uppercase font-mono">Mern Stack Dev</div>
           </div>
 
           {/* Status badge */}
@@ -91,15 +91,15 @@ function Avatar3D() {
         {/* Floating skill badges */}
         <div className="absolute -right-12 top-6 bg-[#041a12]/90 backdrop-blur-sm border border-[#c8a97e]/20 rounded-xl px-3 py-2 whitespace-nowrap"
           style={{ animation: "floatBadge1 3.5s ease-in-out infinite", boxShadow: "0 8px 20px rgba(0,0,0,.5)" }}>
-          <span className="text-[10px] font-mono text-[#c8a97e]">⚛️ React</span>
+          <span className="text-[10px] font-mono text-[#c8a97e]">🍃 MongoDB</span>
         </div>
         <div className="absolute -left-14 bottom-14 bg-[#041a12]/90 backdrop-blur-sm border border-[#c8a97e]/20 rounded-xl px-3 py-2 whitespace-nowrap"
           style={{ animation: "floatBadge2 4s ease-in-out infinite", boxShadow: "0 8px 20px rgba(0,0,0,.5)" }}>
-          <span className="text-[10px] font-mono text-[#c8a97e]">🎨 Tailwind</span>
+          <span className="text-[10px] font-mono text-[#c8a97e]">▲ Next.js</span>
         </div>
         <div className="absolute -left-10 top-8 bg-[#041a12]/90 backdrop-blur-sm border border-[#c8a97e]/20 rounded-xl px-3 py-2 whitespace-nowrap"
           style={{ animation: "floatBadge1 5s ease-in-out infinite reverse", boxShadow: "0 8px 20px rgba(0,0,0,.5)" }}>
-          <span className="text-[10px] font-mono text-[#c8a97e]">⚡ JS</span>
+          <span className="text-[10px] font-mono text-[#c8a97e]">🟢 Node.js</span>
         </div>
       </div>
     </div>

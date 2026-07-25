@@ -22,7 +22,7 @@ function HeroSection({ heroVisible, scrollTo }) {
         <div style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? "none" : "translateY(40px)", transition: "all 1.1s ease" }}>
           <div className="flex items-center gap-4 mb-8">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#c8a97e]" />
-            <span className="text-[#c8a97e]/70 text-[10px] tracking-[.5em] uppercase font-mono">Frontend Developer</span>
+            <span className="text-[#c8a97e]/70 text-[10px] tracking-[.5em] uppercase font-mono">Mern Stack Developer</span>
           </div>
 
           <HeroName />
@@ -30,9 +30,9 @@ function HeroSection({ heroVisible, scrollTo }) {
           <div className="h-px gold-line mb-8 opacity-40 max-w-xs" />
 
           <p className="text-[#4a9a7a] text-base md:text-lg leading-relaxed font-light mb-10 max-w-md">
-            I am a Web Developer skilled in building modern, user-friendly web applications.
-            I also specialize in DSA and problem solving, focusing on efficient algorithms and clean logic.
-            Strong analytical thinking and code optimization are my core strengths.
+           I am a passionate MERN Stack and Full-Stack Developer specializing in building scalable web applications using Next.js, React.js, Node.js, Express.js, and MongoDB.
+My programming journey is driven by a love for problem-solving, clean logic, and crafting seamless, user-friendly digital experiences from scratch.
+Outside of coding, I enjoy exploring new places through travel and staying active with sports to keep my mind sharp.
           </p>
 
           <div className="flex flex-wrap gap-4 mb-10">
@@ -46,6 +46,13 @@ function HeroSection({ heroVisible, scrollTo }) {
               className="px-7 py-3.5 text-[11px] tracking-[.25em] uppercase font-mono border border-[#071e18] text-[#4a9a7a] hover:border-[#c8a97e]/40 hover:text-[#c8a97e] transition-all duration-300">
               Contact
             </button>
+
+            {/* Download CV Button */}
+            <a href="https://drive.google.com/uc?export=download&id=1xGTOngWL_vkiiZKZOebEMLRQuZrm1mns" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-7 py-3.5 text-[11px] tracking-[.25em] uppercase font-mono border border-[#c8a97e]/40 text-[#c8a97e] hover:bg-[#c8a97e]/10 transition-all duration-300 cursor-pointer">
+              <span>Download CV</span>
+              <span>↓</span>
+            </a>
           </div>
 
           {/* Social icons */}
@@ -67,7 +74,7 @@ function HeroSection({ heroVisible, scrollTo }) {
 
           {/* Stats */}
           <div className="flex gap-10">
-            {[["2+", "Years Exp"], ["20+", "Projects"], ["15+", "Clients"]].map(([n, l]) => (
+            {[["2+", "Years Exp"], ["20+", "Projects"],].map(([n, l]) => (
               <div key={l}>
                 <div className="gold-shimmer text-3xl font-bold mb-1"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}>{n}</div>

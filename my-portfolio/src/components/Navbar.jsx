@@ -6,7 +6,12 @@ function Navbar({ scrolled, menuOpen, setMenuOpen, scrollTo }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = NAV_LINKS.map(l => document.getElementById(l.toLowerCase()));
+      // স্পেস এবং কেস সেন্সিটিভিটি হ্যান্ডেল করার জন্য আইডি ফরম্যাট করা
+      const sections = NAV_LINKS.map(l => {
+        const cleanId = l.toLowerCase().replace(/\s+/g, '');
+        return document.getElementById(l) || document.getElementById(cleanId);
+      });
+      
       const scrollY = window.scrollY + 120;
       sections.forEach((sec, i) => {
         if (sec && sec.offsetTop <= scrollY && sec.offsetTop + sec.offsetHeight > scrollY) {
@@ -20,7 +25,16 @@ function Navbar({ scrolled, menuOpen, setMenuOpen, scrollTo }) {
 
   const handleClick = (link) => {
     setActive(link);
-    scrollTo(link);
+    
+    // ক্লিক করার পর নির্দিষ্ট সেকশনে স্মুথ স্ক্রল করার জন্য আইডি ম্যাচিং
+    const cleanId = link.toLowerCase().replace(/\s+/g, '');
+    const element = document.getElementById(link) || document.getElementById(cleanId);
+    
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else if (typeof scrollTo === 'function') {
+      scrollTo(link);
+    }
   };
 
   return (

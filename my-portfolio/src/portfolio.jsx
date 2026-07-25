@@ -9,6 +9,7 @@ import ContactSection      from "./components/ContactSection";
 import Footer              from "./components/Footer";
 import CertificatesSection from "./components/CertificatesSection";
 import EducationSection    from "./components/EducationSection";
+import CodingProfilesSection from "./components/CodingProfilesSection";
 
 export default function Portfolio() {
   const [scrolled,     setScrolled]     = useState(false);
@@ -24,7 +25,7 @@ export default function Portfolio() {
   }, []);
 
   const scrollTo = (id) => {
-    setSelectedProject(null); // হোম পেজে ফিরে এসে স্ক্রোল করবে
+    setSelectedProject(null); 
     setTimeout(() => {
       document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
     }, 100);
@@ -58,7 +59,7 @@ export default function Portfolio() {
         scrollTo={scrollTo}
       />
 
-      {/* যদি কোনো প্রজেক্ট সিলেক্ট করা থাকে, তবে আলাদা ডিটেইলস পেজ দেখাবে, নতুবা হোম পেজ দেখাবে */}
+      
       {selectedProject ? (
         <div className="py-32 px-6 max-w-4xl mx-auto">
           <button 
@@ -129,6 +130,7 @@ export default function Portfolio() {
           <HeroSection heroVisible={heroVisible} scrollTo={scrollTo} />
           <EducationSection />
           <SkillsSection />
+          <CodingProfilesSection />
           <CertificatesSection />
           <ProjectsSection onSelectProject={setSelectedProject} />
           <ContactSection />
