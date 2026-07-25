@@ -1,8 +1,13 @@
 import Portfolio from './portfolio';
-
+import CustomCursor from './components/CustomCursor';
 
 function App() {
-  return <Portfolio />;
+  return (
+    <>
+      <CustomCursor />
+      <Portfolio />
+    </>
+  );
 }
 
 export default App;

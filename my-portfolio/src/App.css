@@ -10,6 +10,12 @@ body {
   min-height: 100vh;
 }
 
+@media (min-width: 768px) {
+  * {
+    cursor: none !important;
+  }
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
