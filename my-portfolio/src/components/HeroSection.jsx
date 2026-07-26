@@ -49,7 +49,7 @@ function HeroSection({ heroVisible, scrollTo }) {
             </button>
 
             {/* Download CV Button */}
-            <a href="https://drive.google.com/uc?export=download&id=1xGTOngWL_vkiiZKZOebEMLRQuZrm1mns" target="_blank" rel="noopener noreferrer"
+            <a href="https://drive.google.com/file/d/1Q2br6cMMjgX3CScPlPttGgrdSxNg4Nh0/view?usp=sharing" target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-[10px] sm:text-[11px] tracking-[.2em] sm:tracking-[.25em] uppercase font-mono border border-[#c8a97e]/40 text-[#c8a97e] hover:bg-[#c8a97e]/10 transition-all duration-300 cursor-pointer">
               <span>Download CV</span>
               <span>↓</span>
