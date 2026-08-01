@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import myPicture from "../assets/Azad_Hossain.png";
+import myPicture from "../assets/Azad_image.png";
+
 
 function Avatar3D() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
